@@ -1,13 +1,15 @@
 import { useState, createContext, useContext, type ReactNode } from 'react'
 import type { UserRole, PoolLevel } from '@/types'
 
+type PageKey = PoolLevel | 'dashboard' | 'analytics' | 'batch' | 'audit' | 'reports' | 'todos'
+
 interface AppContextType {
   currentRole: UserRole
   setCurrentRole: (role: UserRole) => void
   sidebarCollapsed: boolean
   setSidebarCollapsed: (collapsed: boolean) => void
-  activePool: PoolLevel | 'dashboard' | 'analytics' | 'batch' | 'audit'
-  setActivePool: (pool: PoolLevel | 'dashboard' | 'analytics' | 'batch' | 'audit') => void
+  activePool: PageKey
+  setActivePool: (pool: PageKey) => void
   selectedItemId: string | null
   setSelectedItemId: (id: string | null) => void
 }
@@ -17,7 +19,7 @@ const AppContext = createContext<AppContextType | null>(null)
 export function AppProvider({ children }: { children: ReactNode }) {
   const [currentRole, setCurrentRole] = useState<UserRole>('ops_manager')
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
-  const [activePool, setActivePool] = useState<PoolLevel | 'dashboard' | 'analytics' | 'batch' | 'audit'>('dashboard')
+  const [activePool, setActivePool] = useState<PageKey>('dashboard')
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null)
 
   return (
@@ -47,3 +49,4 @@ const roleLabels: Record<UserRole, string> = {
 }
 
 export { roleLabels }
+export type { PageKey }

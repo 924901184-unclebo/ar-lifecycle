@@ -3,6 +3,7 @@ import { cn } from '@/lib/utils'
 import { useApp, roleLabels } from '@/hooks/useApp'
 import { useState } from 'react'
 import type { UserRole } from '@/types'
+import { showToast } from '@/components/ui/toast'
 
 export function Header() {
   const { currentRole, setCurrentRole, sidebarCollapsed } = useApp()
@@ -13,8 +14,8 @@ export function Header() {
 
   return (
     <header className={cn(
-      "fixed top-0 right-0 z-20 flex h-14 items-center justify-between border-b border-border bg-card/80 backdrop-blur-md px-6 transition-all duration-300",
-      sidebarCollapsed ? "left-[60px]" : "left-[240px]"
+      "fixed top-0 right-0 z-20 flex h-16 items-center justify-between border-b border-border/60 bg-card/90 backdrop-blur-xl px-6 transition-all duration-300",
+      sidebarCollapsed ? "left-[64px]" : "left-[240px]"
     )}>
       {/* Search */}
       <div className={cn(
@@ -36,7 +37,10 @@ export function Header() {
 
       <div className="flex items-center gap-3">
         {/* Notifications */}
-        <button className="relative flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground hover:bg-accent hover:text-foreground transition-colors">
+        <button
+          className="relative flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+          onClick={() => showToast('3条逾期预警通知：中关村软件(59天)、未来科技(118天)、天府数字(164天)', 'warning')}
+        >
           <Bell className="h-4 w-4" />
           <span className="absolute right-1.5 top-1.5 flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-destructive opacity-75" />
@@ -48,7 +52,7 @@ export function Header() {
         <div className="relative">
           <button
             onClick={() => setShowRoleMenu(!showRoleMenu)}
-            className="flex items-center gap-2.5 rounded-lg border border-border bg-background px-3 py-1.5 text-sm hover:bg-accent transition-colors"
+            className="flex items-center gap-2.5 rounded-lg border border-border/60 bg-background px-3 py-2 text-sm hover:bg-muted transition-colors"
           >
             <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10">
               <User className="h-3.5 w-3.5 text-primary" />
@@ -63,7 +67,7 @@ export function Header() {
           {showRoleMenu && (
             <>
               <div className="fixed inset-0 z-40" onClick={() => setShowRoleMenu(false)} />
-              <div className="absolute right-0 top-full mt-1 z-50 w-48 rounded-lg border border-border bg-card py-1 shadow-lg animate-scale-in">
+              <div className="absolute right-0 top-full mt-2 z-50 w-48 rounded-xl border border-border/60 bg-card py-1.5 shadow-lg animate-scale-in">
                 <div className="px-3 py-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                   切换角色视图
                 </div>
@@ -74,8 +78,8 @@ export function Header() {
                     className={cn(
                       "flex w-full items-center gap-2 px-3 py-2 text-sm transition-colors",
                       currentRole === role
-                        ? "bg-primary/5 text-primary"
-                        : "text-foreground hover:bg-accent"
+                        ? "bg-primary/5 text-primary font-medium"
+                        : "text-foreground hover:bg-muted"
                     )}
                   >
                     <div className={cn(

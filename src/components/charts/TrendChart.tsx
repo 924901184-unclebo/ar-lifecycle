@@ -26,9 +26,9 @@ export function TrendChart({ data }: TrendChartProps) {
     }).join(' ')
 
   const lines = [
-    { key: 'receivable' as const, label: '应收总额', color: 'hsl(221, 83%, 53%)', dashArray: '' },
-    { key: 'overdue' as const, label: '逾期金额', color: 'hsl(25, 95%, 53%)', dashArray: '' },
-    { key: 'collection' as const, label: '回款金额', color: 'hsl(142, 71%, 45%)', dashArray: '' },
+    { key: 'receivable' as const, label: '应收总额', color: 'hsl(235, 60%, 52%)', dashArray: '' },
+    { key: 'overdue' as const, label: '逾期金额', color: 'hsl(25, 90%, 54%)', dashArray: '' },
+    { key: 'collection' as const, label: '回款金额', color: 'hsl(145, 63%, 42%)', dashArray: '' },
   ]
 
   return (

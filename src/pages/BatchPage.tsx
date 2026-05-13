@@ -51,7 +51,7 @@ export function BatchPage() {
       </div>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card
           className={cn("stat-card cursor-pointer", batchMode === 'letter' && "ring-2 ring-primary")}
           onClick={() => setBatchMode('letter')}

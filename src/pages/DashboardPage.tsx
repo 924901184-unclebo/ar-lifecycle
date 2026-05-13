@@ -8,6 +8,27 @@ import { PoolFlowChart } from '@/components/charts/PoolFlowChart'
 import { TrendChart } from '@/components/charts/TrendChart'
 import type { PoolLevel } from '@/types'
 
+/* 往年逾期数据（与 OverduePage 保持一致） */
+const historicalOverdueItems = [
+  {
+    id: 'MANUAL-001', contractNo: 'HT-2023-0088', customerName: '上海星辰文化传播有限公司',
+    customerShort: '星辰文化', remainingAmount: 450000, agingDays: 820, agingBucket: '2-3年',
+    salesperson: '王小明', lastAction: '电话催收', isManual: true, year: 2023,
+  },
+  {
+    id: 'MANUAL-002', contractNo: 'HT-2022-0215', customerName: '深圳蓝海网络科技有限公司',
+    customerShort: '蓝海网络', remainingAmount: 780000, agingDays: 1150, agingBucket: '3-4年',
+    salesperson: '李志强', lastAction: '律师函', isManual: true, year: 2022,
+  },
+  {
+    id: 'MANUAL-003', contractNo: 'HT-2024-0142', customerName: '杭州启航品牌策划有限公司',
+    customerShort: '启航品牌', remainingAmount: 200000, agingDays: 480, agingBucket: '1-2年',
+    salesperson: '陈静', lastAction: '上门拜访', isManual: true, year: 2024,
+  },
+]
+
+const historicalTotalAmount = historicalOverdueItems.reduce((s, i) => s + i.remainingAmount, 0)
+
 const poolCardStyles: Record<PoolLevel, { border: string; iconBg: string; textColor: string }> = {
   total: { border: 'border-l-pool-total', iconBg: 'bg-pool-total/10', textColor: 'text-pool-total' },
   receivable: { border: 'border-l-pool-receivable', iconBg: 'bg-pool-receivable/10', textColor: 'text-pool-receivable' },
@@ -28,15 +49,30 @@ export function DashboardPage() {
   const { setActivePool } = useApp()
   const stats = dashboardStats
 
+  /* 合并往年数据后的统计 */
+  const adjustedTotalDebt = stats.totalDebt + historicalTotalAmount
+  const adjustedPoolAmounts: Record<PoolLevel, number> = {
+    ...stats.poolAmounts,
+    overdue: stats.poolAmounts.overdue + historicalTotalAmount,
+  }
+  const adjustedPoolCounts = {
+    ...stats.poolCounts,
+    overdue: stats.poolCounts.overdue + historicalOverdueItems.length,
+  }
+
   const kpiCards = [
-    { label: '总应收金额', value: stats.totalDebt, trend: '+5.2%', trendUp: true, icon: DollarSign },
+    { label: '总应收金额', value: adjustedTotalDebt, trend: '+5.2%', trendUp: true, icon: DollarSign },
     { label: '本月回款', value: stats.monthlyCollection, trend: '+12.8%', trendUp: true, icon: TrendingUp },
     { label: '回款率', value: stats.collectionRate, suffix: '%', trend: '+3.1%', trendUp: true, icon: Percent },
     { label: '平均账龄', value: stats.avgAgingDays, suffix: '天', trend: '-2天', trendUp: false, icon: Clock },
   ]
 
-  /* Recent alerts */
-  const overdueItems = receivables.filter(r => r.poolLevel === 'overdue').slice(0, 3)
+  /* Recent alerts — 包含系统逾期 + 往年逾期，按天数降序 */
+  const systemOverdueItems = receivables.filter(r => r.poolLevel === 'overdue')
+  const allOverdueForAlert = [
+    ...systemOverdueItems.map(i => ({ ...i, isManual: false as const })),
+    ...historicalOverdueItems.map(i => ({ ...i, isManual: true as const })),
+  ].sort((a, b) => b.agingDays - a.agingDays).slice(0, 6)
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -47,7 +83,7 @@ export function DashboardPage() {
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
         {kpiCards.map((kpi, i) => {
           const Icon = kpi.icon
           return (
@@ -83,12 +119,12 @@ export function DashboardPage() {
       {/* Pool Cards - The 5 Level Funnel */}
       <div>
         <h2 className="text-base font-semibold text-foreground mb-3">5级状态池概览</h2>
-        <div className="grid grid-cols-5 gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
           {poolConfigs.map((pool) => {
             const style = poolCardStyles[pool.key]
             const Icon = poolIcons[pool.key]
-            const count = stats.poolCounts[pool.key]
-            const amount = stats.poolAmounts[pool.key]
+            const count = adjustedPoolCounts[pool.key]
+            const amount = adjustedPoolAmounts[pool.key]
             return (
               <Card
                 key={pool.key}
@@ -131,12 +167,12 @@ export function DashboardPage() {
             <CardTitle>资金分布</CardTitle>
           </CardHeader>
           <CardContent>
-            <PoolFlowChart />
+            <PoolFlowChart overrideAmounts={adjustedPoolAmounts} />
           </CardContent>
         </Card>
 
         {/* Trend Chart */}
-        <Card className="col-span-2">
+        <Card className="lg:col-span-2">
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle>应收趋势</CardTitle>
             <span className="text-xs text-muted-foreground">近6个月</span>
@@ -162,7 +198,8 @@ export function DashboardPage() {
           </button>
         </CardHeader>
         <CardContent>
-          <table className="data-table">
+          <div className="overflow-x-auto">
+          <table className="data-table min-w-[700px]">
             <thead>
               <tr>
                 <th>合同编号</th>
@@ -175,9 +212,16 @@ export function DashboardPage() {
               </tr>
             </thead>
             <tbody>
-              {overdueItems.map(item => (
-                <tr key={item.id} className="row-overdue">
-                  <td className="font-mono text-xs">{item.contractNo}</td>
+              {allOverdueForAlert.map(item => (
+                <tr key={item.id} className={cn("row-overdue", item.isManual && "bg-amber-50/30 dark:bg-amber-950/10")}>
+                  <td className="font-mono text-xs">
+                    <div className="flex items-center gap-1.5">
+                      {item.contractNo}
+                      {item.isManual && (
+                        <span className="inline-block px-1 py-0 text-[9px] font-medium rounded bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-400">往年</span>
+                      )}
+                    </div>
+                  </td>
                   <td className="font-medium">{item.customerShort}</td>
                   <td className="font-semibold tabular-nums text-pool-overdue">¥{formatNumber(item.remainingAmount)}</td>
                   <td>
@@ -192,6 +236,7 @@ export function DashboardPage() {
               ))}
             </tbody>
           </table>
+          </div>
         </CardContent>
       </Card>
     </div>

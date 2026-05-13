@@ -84,8 +84,8 @@ export function AuditPage() {
 
       {/* Log table */}
       <Card>
-        <CardContent className="p-0">
-          <table className="data-table">
+        <CardContent className="p-0 overflow-x-auto">
+          <table className="data-table min-w-[700px]">
             <thead>
               <tr>
                 <th>时间</th>

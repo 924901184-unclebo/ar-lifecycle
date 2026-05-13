@@ -107,9 +107,9 @@ export function PoolListPage({ poolLevel }: PoolListPageProps) {
   const selectedItem = selectedItemId ? receivables.find(r => r.id === selectedItemId) : null
 
   return (
-    <div className="flex gap-4 animate-fade-in">
+    <div className="flex gap-4 animate-fade-in min-w-0">
       {/* Main List */}
-      <div className={cn("flex-1 space-y-4 transition-all duration-300", selectedItem && "max-w-[calc(100%-420px)]")}>
+      <div className={cn("flex-1 min-w-0 space-y-4 transition-all duration-300", selectedItem && "lg:max-w-[calc(100%-420px)]")}>
         {/* Page Header */}
         <div className="flex items-center justify-between">
           <div>
@@ -263,8 +263,8 @@ export function PoolListPage({ poolLevel }: PoolListPageProps) {
 
         {/* Table */}
         <Card>
-          <CardContent className="p-0">
-            <table className="data-table">
+          <CardContent className="p-0 overflow-x-auto">
+            <table className="data-table min-w-[800px]">
               <thead>
                 <tr>
                   {(poolLevel === 'overdue' || poolLevel === 'litigation') && (

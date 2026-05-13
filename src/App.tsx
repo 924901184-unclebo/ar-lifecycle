@@ -5,9 +5,14 @@ import { Header } from '@/components/layout/Header'
 import { ToastContainer } from '@/components/ui/toast'
 import { DashboardPage } from '@/pages/DashboardPage'
 import { PoolListPage } from '@/pages/PoolListPage'
+import { OverduePage } from '@/pages/OverduePage'
+import { LitigationPage } from '@/pages/LitigationPage'
+import { WriteOffPage } from '@/pages/WriteOffPage'
+import { ReportsPage } from '@/pages/ReportsPage'
 import { AnalyticsPage } from '@/pages/AnalyticsPage'
 import { BatchPage } from '@/pages/BatchPage'
 import { AuditPage } from '@/pages/AuditPage'
+import { TodoPage } from '@/pages/TodoPage'
 
 function AppContent() {
   const { activePool, sidebarCollapsed } = useApp()
@@ -18,30 +23,37 @@ function AppContent() {
         return <DashboardPage />
       case 'total':
       case 'receivable':
-      case 'overdue':
-      case 'litigation':
-      case 'baddebt':
         return <PoolListPage poolLevel={activePool} />
+      case 'overdue':
+        return <OverduePage />
+      case 'litigation':
+        return <LitigationPage />
+      case 'baddebt':
+        return <WriteOffPage />
+      case 'reports':
+        return <ReportsPage />
       case 'analytics':
         return <AnalyticsPage />
       case 'batch':
         return <BatchPage />
       case 'audit':
         return <AuditPage />
+      case 'todos':
+        return <TodoPage />
       default:
         return <DashboardPage />
     }
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-x-hidden">
       <Sidebar />
       <Header />
       <main className={cn(
-        "pt-14 transition-all duration-300",
-        sidebarCollapsed ? "pl-[60px]" : "pl-[240px]"
+        "pt-16 transition-all duration-300",
+        sidebarCollapsed ? "ml-[64px]" : "ml-[240px]"
       )}>
-        <div className="p-6">
+        <div className="p-4 lg:p-5">
           {renderPage()}
         </div>
       </main>

@@ -4,98 +4,99 @@
 
 @layer base {
   :root {
-    /* ─── Core Palette ─── */
-    --background: 220 20% 97%;
-    --foreground: 222 47% 11%;
+    /* ─── Core Palette (Inspired by Shipper's Dashboard) ─── */
+    --background: 0 0% 98%;
+    --foreground: 230 25% 18%;
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 230 25% 18%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover-foreground: 230 25% 18%;
 
-    /* Primary: Professional Deep Blue */
-    --primary: 221 83% 53%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary: Fresh Green (CTA / Active) */
+    --primary: 145 63% 42%;
+    --primary-foreground: 0 0% 100%;
 
     /* Secondary */
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 222 47% 11%;
+    --secondary: 240 5% 96%;
+    --secondary-foreground: 230 25% 18%;
 
     /* Muted */
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 9% 46%;
+    --muted: 240 5% 96%;
+    --muted-foreground: 230 10% 52%;
 
-    /* Accent */
-    --accent: 220 14% 96%;
-    --accent-foreground: 222 47% 11%;
+    /* Accent: Soft Purple */
+    --accent: 262 52% 60%;
+    --accent-foreground: 0 0% 100%;
 
     /* Destructive */
-    --destructive: 0 84% 60%;
+    --destructive: 0 72% 58%;
     --destructive-foreground: 0 0% 100%;
 
     /* Success */
-    --success: 142 71% 45%;
+    --success: 145 63% 42%;
     --success-foreground: 0 0% 100%;
 
     /* Warning */
-    --warning: 38 92% 50%;
+    --warning: 35 92% 55%;
     --warning-foreground: 0 0% 100%;
 
     /* ─── 5-Level Pool Colors ─── */
-    /* L1: Total Debt Pool - Deep Blue */
-    --pool-total: 221 83% 53%;
+    /* L1: Total Debt Pool - Deep Indigo */
+    --pool-total: 235 60% 52%;
     --pool-total-foreground: 0 0% 100%;
-    --pool-total-muted: 221 83% 96%;
+    --pool-total-muted: 235 60% 96%;
 
-    /* L2: Receivable Pool - Teal/Cyan */
-    --pool-receivable: 199 89% 48%;
+    /* L2: Receivable Pool - Cool Blue */
+    --pool-receivable: 210 80% 52%;
     --pool-receivable-foreground: 0 0% 100%;
-    --pool-receivable-muted: 199 89% 95%;
+    --pool-receivable-muted: 210 80% 96%;
 
-    /* L3: Overdue Pool - Amber/Orange */
-    --pool-overdue: 25 95% 53%;
+    /* L3: Overdue Pool - Warm Orange */
+    --pool-overdue: 25 90% 54%;
     --pool-overdue-foreground: 0 0% 100%;
-    --pool-overdue-muted: 25 95% 95%;
+    --pool-overdue-muted: 25 90% 96%;
 
-    /* L4: Litigation Pool - Red */
-    --pool-litigation: 0 84% 60%;
+    /* L4: Litigation Pool - Rose Red */
+    --pool-litigation: 350 72% 56%;
     --pool-litigation-foreground: 0 0% 100%;
-    --pool-litigation-muted: 0 84% 96%;
+    --pool-litigation-muted: 350 72% 96%;
 
-    /* L5: Bad Debt Pool - Slate */
-    --pool-baddebt: 220 9% 46%;
+    /* L5: Bad Debt Pool - Neutral Slate */
+    --pool-baddebt: 220 12% 50%;
     --pool-baddebt-foreground: 0 0% 100%;
     --pool-baddebt-muted: 220 14% 96%;
 
-    /* ─── Sidebar ─── */
-    --sidebar-bg: 222 47% 11%;
-    --sidebar-foreground: 213 31% 91%;
-    --sidebar-active: 221 83% 53%;
-    --sidebar-hover: 217 33% 17%;
+    /* ─── Sidebar (Dark, slightly warmer) ─── */
+    --sidebar-bg: 232 32% 14%;
+    --sidebar-foreground: 220 20% 88%;
+    --sidebar-active: 145 63% 42%;
+    --sidebar-hover: 232 28% 20%;
 
     /* ─── UI Tokens ─── */
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 221 83% 53%;
-    --radius: 0.5rem;
+    --border: 230 15% 92%;
+    --input: 230 15% 92%;
+    --ring: 145 63% 42%;
+    --radius: 0.75rem;
 
     /* ─── Gradients ─── */
-    --gradient-primary: linear-gradient(135deg, hsl(221 83% 53%), hsl(199 89% 48%));
-    --gradient-overdue: linear-gradient(135deg, hsl(25 95% 53%), hsl(0 84% 60%));
-    --gradient-success: linear-gradient(135deg, hsl(142 71% 45%), hsl(160 84% 39%));
-    --gradient-sidebar: linear-gradient(180deg, hsl(222 47% 11%) 0%, hsl(222 47% 8%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(145 63% 42%), hsl(165 70% 38%));
+    --gradient-overdue: linear-gradient(135deg, hsl(25 90% 54%), hsl(350 72% 56%));
+    --gradient-success: linear-gradient(135deg, hsl(145 63% 42%), hsl(160 70% 38%));
+    --gradient-sidebar: linear-gradient(180deg, hsl(232 32% 14%) 0%, hsl(232 32% 10%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(262 52% 60%), hsl(280 60% 55%));
     --gradient-pool-bar: linear-gradient(90deg, 
-      hsl(221 83% 53%) 0%, 
-      hsl(199 89% 48%) 25%, 
-      hsl(25 95% 53%) 50%, 
-      hsl(0 84% 60%) 75%, 
-      hsl(220 9% 46%) 100%
+      hsl(235 60% 52%) 0%, 
+      hsl(210 80% 52%) 25%, 
+      hsl(25 90% 54%) 50%, 
+      hsl(350 72% 56%) 75%, 
+      hsl(220 12% 50%) 100%
     );
 
-    /* ─── Shadows ─── */
-    --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.04), 0 1px 2px -1px rgb(0 0 0 / 0.04);
-    --shadow-card-hover: 0 4px 12px -2px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.04);
-    --shadow-pool: 0 2px 8px -2px rgb(0 0 0 / 0.06);
-    --shadow-elegant: 0 10px 30px -10px hsl(221 83% 53% / 0.15);
+    /* ─── Shadows (Softer, more modern) ─── */
+    --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.02), 0 1px 2px -1px rgb(0 0 0 / 0.02);
+    --shadow-card-hover: 0 8px 24px -4px rgb(0 0 0 / 0.06), 0 2px 6px -2px rgb(0 0 0 / 0.03);
+    --shadow-pool: 0 2px 8px -2px rgb(0 0 0 / 0.04);
+    --shadow-elegant: 0 12px 36px -12px hsl(145 63% 42% / 0.12);
 
     /* ─── Transitions ─── */
     --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
@@ -114,18 +115,18 @@
 
   /* Scrollbar styling */
   ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
   }
   ::-webkit-scrollbar-track {
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: hsl(var(--muted-foreground) / 0.2);
-    border-radius: 3px;
+    background: hsl(var(--muted-foreground) / 0.15);
+    border-radius: 4px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: hsl(var(--muted-foreground) / 0.35);
+    background: hsl(var(--muted-foreground) / 0.3);
   }
 }
 
@@ -161,35 +162,40 @@
     color: hsl(var(--pool-baddebt));
   }
 
-  /* Data table styles */
+  /* Data table styles - Clean & Airy */
   .data-table {
     @apply w-full text-sm;
   }
   .data-table th {
-    @apply px-4 py-3 text-left font-medium text-muted-foreground bg-muted/50 first:rounded-tl-md last:rounded-tr-md;
+    @apply px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground bg-muted/30 first:rounded-tl-lg last:rounded-tr-lg;
   }
   .data-table td {
-    @apply px-4 py-3 border-b border-border;
+    @apply px-4 py-3.5 border-b border-border/60;
   }
   .data-table tr {
     transition: var(--transition-fast);
   }
   .data-table tbody tr:hover {
-    @apply bg-muted/30;
+    @apply bg-primary/[0.02];
+  }
+  .data-table tbody tr:last-child td {
+    @apply border-b-0;
   }
   .data-table .row-overdue {
-    @apply bg-pool-overdue-muted/50;
+    @apply bg-pool-overdue-muted/40;
   }
   .data-table .row-overdue:hover {
-    @apply bg-pool-overdue-muted;
+    @apply bg-pool-overdue-muted/70;
   }
 
-  /* Stat card animation */
+  /* Stat card - More rounded, lighter */
   .stat-card {
-    @apply rounded-lg border bg-card p-5 shadow-card transition-all duration-200;
+    @apply rounded-xl border border-border/60 bg-card transition-all duration-200;
+    box-shadow: var(--shadow-card);
   }
   .stat-card:hover {
-    @apply shadow-card-hover -translate-y-0.5;
+    box-shadow: var(--shadow-card-hover);
+    @apply -translate-y-0.5;
   }
 
   /* Flow line connector */
