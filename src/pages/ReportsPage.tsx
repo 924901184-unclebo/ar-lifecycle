@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BarChart3, Download, Filter, Table2, PieChart } from 'lucide-react'
+import { Download, Table2, PieChart } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -11,13 +11,6 @@ import { showToast } from '@/components/ui/toast'
 type ReportTab = 'aging' | 'overdue_summary'
 
 /* Aging analysis with bad debt provision ratios */
-interface AgingBucket {
-  label: string
-  range: string
-  rate: number
-  items: typeof receivables
-}
-
 const agingBuckets: { label: string; range: string; rate: number; minDays: number; maxDays: number }[] = [
   { label: '1年内', range: '0-365天', rate: 0.08, minDays: 0, maxDays: 365 },
   { label: '1-2年', range: '366-730天', rate: 0.15, minDays: 366, maxDays: 730 },

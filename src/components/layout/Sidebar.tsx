@@ -6,7 +6,6 @@ import {
 import { cn } from '@/lib/utils'
 import { useApp } from '@/hooks/useApp'
 import type { PageKey } from '@/hooks/useApp'
-import type { PoolLevel } from '@/types'
 
 interface NavItem {
   key: PageKey

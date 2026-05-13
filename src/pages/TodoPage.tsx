@@ -2,9 +2,9 @@ import { useState } from 'react'
 import {
   CheckCircle2, Clock, AlertTriangle, Scale, Archive,
   FileText, ArrowRight, Bell, Filter, Eye,
-  Calculator, Users, Shield, Send,
+  Calculator, Shield,
 } from 'lucide-react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { cn, formatNumber } from '@/lib/utils'

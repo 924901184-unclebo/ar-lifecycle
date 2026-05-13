@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react'
 import {
   AlertTriangle, Phone, MapPin, Mail, MessageSquare,
-  FileText, Upload, Shield, CheckCircle2, Clock, ArrowRight,
+  FileText, Upload, Shield, CheckCircle2, ArrowRight,
   Download, Plus, X, Eye, Users, Calculator, Scale, Send,
   Search, ChevronLeft, ChevronRight as ChevronRightIcon, ChevronDown,
 } from 'lucide-react'
@@ -13,7 +13,6 @@ import { receivables, evidenceItems, collectionRecords, poolConfigs } from '@/da
 import { showToast } from '@/components/ui/toast'
 import { useApp } from '@/hooks/useApp'
 import { PoolMetaPopover } from '@/components/ui/PoolMetaPopover'
-import type { PoolLevel } from '@/types'
 
 type ViewTab = 'ops' | 'finance' | 'legal'
 
@@ -334,7 +333,7 @@ export function OverduePage() {
   const itemCollection = selectedItem ? collectionRecords.filter(c => c.receivableId === selectedItem.id) : []
 
   /* Evidence completeness */
-  const requiredTypes = ['contract', 'invoice', 'delivery', 'collection']
+  const requiredTypes = ['contract', 'invoice', 'delivery', 'collection'] as const
   const existingTypes = new Set(itemEvidence.map(e => e.type))
   const completedCount = requiredTypes.filter(t => existingTypes.has(t)).length
   const completionPct = (completedCount / requiredTypes.length) * 100
